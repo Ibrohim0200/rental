@@ -22,11 +22,7 @@ from bot.database.db import init_db, save_order
 from bot.locale.get_lang import get_localized_text
 
 
-app = Flask(__name__)
 
-@app.route("/")
-def index():
-    return "🤖 Bot ishlamoqda!"
 
 bot = Bot(BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
 storage = MemoryStorage()
@@ -195,17 +191,26 @@ async def cancel_order(callback: CallbackQuery, state: FSMContext):
 
 
 # 7️⃣ Run
-async def start_bot():
+async def main():
     await init_db()
     await bot.delete_webhook(drop_pending_updates=True)
     print("🤖 Bot ishga tushdi...")
     await dp.start_polling(bot)
 
-# -----------------------------
-# Flask + asyncio bot
-# -----------------------------
+# -------------------- Flask server --------------------
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return "🤖 Bot ishlamoqda!"
+
+def start_bot():
+    asyncio.run(main())
+
 if __name__ == "__main__":
+    # Botni alohida thread-da ishga tushiramiz
+    from threading import Thread
+    Thread(target=start_bot, daemon=True).start()
+
     port = int(os.environ.get("PORT", 5000))
-    loop = asyncio.get_event_loop()
-    loop.create_task(start_bot())
     app.run(host="0.0.0.0", port=port)
