@@ -1,0 +1,26 @@
+{
+  "navbar": {
+    "autopark": "Car park"
+  },
+  "cars": {
+    "price_suffix": "UZS/day",
+    "order_button": "Order now"
+  },
+  "modal": {
+    "title": "Order",
+    "car_label": "Car:",
+    "name_label": "Full name:",
+    "phone_label": "Phone number:",
+    "start_date_label": "Rental start date:",
+    "end_date_label": "Rental end date:",
+    "confirm_button": "Confirm"
+  },
+  "alerts": {
+    "fill_fields": "⚠️ Please fill in all fields!",
+    "send_error": "❌ Failed to send data!",
+    "no_webapp": "❌ Telegram WebApp not found!"
+  },
+  "console": {
+    "ready": "✅ Telegram WebApp is ready!"
+  }
+}

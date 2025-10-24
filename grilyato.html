@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RENTAL24 - Rent a Car</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f5f6fa; color: #333; }
+    header {text-align: center; padding: 20px; background: #000; }
+    header h1 {font-size: 28px; margin: 0; font-weight: bold;letter-spacing: 2px; }
+    .rental {color: white; }
+    .twenty {color: red; }
+    nav { display: flex; justify-content: center; gap: 25px; margin: 20px 0; font-weight: 600; }
+    nav a { text-decoration: none; color: #333; }
+    nav a.active { color: #ff6600; border-bottom: 2px solid #ff6600; padding-bottom: 3px; }
+
+    .cars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      padding: 15px;
+    }
+
+    .car-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      padding: 12px;
+      text-align: center;
+      transition: 0.3s;
+    }
+    .car-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+    .car-card img { width: 100%; border-radius: 12px; margin-bottom: 10px; }
+    .car-card h3 { margin: 8px 0 5px; font-size: 18px; }
+    .price { font-size: 16px; font-weight: bold; color: #ff6600; margin: 5px 0 12px; }
+    .btn { padding: 8px 12px; background: #ff6600; color: #fff; border-radius: 10px; text-decoration: none; font-weight: 600; cursor: pointer; display: inline-block; font-size: 14px; }
+    .btn:hover { background: #e05500; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 35px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+    .modal-content h2 { margin-top: 0; text-align: center; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+    .form-group input {
+      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+    .close-btn:hover {
+      color: red;
+    }
+    .modal button {
+      width: 100%; padding: 12px;
+      background: #ff6600; border: none; border-radius: 10px;
+      color: white; font-weight: bold; cursor: pointer;
+    }
+    .modal button:hover { background: #e05500; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><span class="rental">RENTAL</span><span class="twenty">24</span></h1>
+  </header>
+
+  <nav>
+    <a href="#" class="active">Avtopark</a>
+  </nav>
+
+  <section class="cars">
+      <!-- Mashina 1 -->
+      <div class="car-card">
+        <img src="image/BYD.jpg" alt="BYD Chempion">
+        <h3>BYD Chempion</h3>
+        <p class="price" data-price="1300000">1300000 so'm/kun</p>
+        <div class="btn" onclick="openModal('BYD Chempion')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 2 -->
+      <div class="car-card">
+        <img src="image/Trailblazer.jpg" alt="Trailblazer">
+        <h3>Trailblazer</h3>
+        <p class="price" data-price="1200000">1200000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Trailblazer')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 3 -->
+      <div class="car-card">
+        <img src="image/Gentra.jpg" alt="Chevrolet Gentra">
+        <h3>Chevrolet Gentra</h3>
+        <p class="price" data-price="550000">550000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Gentra')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 4 -->
+      <div class="car-card">
+        <img src="image/Cobalt.jpg" alt="Chevrolet Cobalt">
+        <h3>Chevrolet Cobalt</h3>
+        <p class="price" data-price="450000">450000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Cobalt')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 5 -->
+      <div class="car-card">
+        <img src="image/Captiva.jpg" alt="Chevrolet Captiva 3">
+        <h3>Chevrolet Captiva 3</h3>
+        <p class="price" data-price="800000">800000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Captiva 3')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 6 -->
+      <div class="car-card">
+        <img src="image/Spark.jpg" alt="Chevrolet Spark">
+        <h3>Chevrolet Spark</h3>
+        <p class="price" data-price="350000">350000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Spark')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 7 -->
+      <div class="car-card">
+        <img src="image/Malibu.jpg" alt="Chevrolet Malibu 2">
+        <h3>Chevrolet Malibu 2</h3>
+        <p class="price" data-price="1300000">1300000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Malibu 2')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 8 -->
+      <div class="car-card">
+        <img src="image/Monza.jpg" alt="Chevrolet Monza">
+        <h3>Chevrolet Monza</h3>
+        <p class="price" data-price="700000">700000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Monza')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 9 -->
+      <div class="car-card">
+        <img src="image/Nexia.jpg" alt="Chevrolet Nexia 3">
+        <h3>Chevrolet Nexia 3</h3>
+        <p class="price" data-price="400000">400000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Nexia 3')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 10 -->
+      <div class="car-card">
+        <img src="image/Onix.jpg" alt="Chevrolet Onix">
+        <h3>Chevrolet Onix</h3>
+        <p class="price" data-price="700000">700000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Onix')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 11 -->
+      <div class="car-card">
+        <img src="image/Tracker.jpg" alt="Chevrolet Tracker 2">
+        <h3>Chevrolet Tracker 2</h3>
+        <p class="price" data-price="800000">800000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Tracker 2')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 12 -->
+      <div class="car-card">
+        <img src="image/Equinox.jpg" alt="Chevrolet Equinox">
+        <h3>Chevrolet Equinox</h3>
+        <p class="price" data-price="1200000">1200000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Equinox')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 13 -->
+      <div class="car-card">
+        <img src="image/Chazor.jpg" alt="BYD Chazor">
+        <h3>BYD Chazor</h3>
+        <p class="price" data-price="1200000">1200000 so'm/kun</p>
+        <div class="btn" onclick="openModal('BYD Chazor')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 14 -->
+      <div class="car-card">
+        <img src="image/Damas.jpg" alt="Chevrolet Damas">
+        <h3>Chevrolet Damas</h3>
+        <p class="price" data-price="450000">450000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Damas')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 15 -->
+      <div class="car-card">
+        <img src="image/Cherry.jpg" alt="Cherry Tiggo 7 Pro">
+        <h3>Cherry Tiggo 7 Pro</h3>
+        <p class="price" data-price="900000">900000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Cherry Tiggo 7 Pro')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 16 -->
+      <div class="car-card">
+        <img src="image/E2.jpg" alt="BYD E 2">
+        <h3>BYD E 2</h3>
+        <p class="price" data-price="1000000">1000000 so'm/kun</p>
+        <div class="btn" onclick="openModal('BYD E 2')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 17 -->
+      <div class="car-card">
+        <img src="image/Uan up.jpg" alt="BYD Yuan Up">
+        <h3>BYD Yuan Up</h3>
+        <p class="price" data-price="1000000">1000000 so'm/kun</p>
+        <div class="btn" onclick="openModal('BYD Yuan Up')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 18 -->
+      <div class="car-card">
+        <img src="image/Song.jpg" alt="BYD Song Plus">
+        <h3>BYD Song Plus</h3>
+        <p class="price" data-price="1200000">1200000 so'm/kun</p>
+        <div class="btn" onclick="openModal('BYD Song Plus')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 19 -->
+      <div class="car-card">
+        <img src="image/Orlando.jpg" alt="Chevrolet Orlando">
+        <h3>Chevrolet Orlando</h3>
+        <p class="price" data-price="800000">800000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Orlando')">Buyurtma berish</div>
+      </div>
+
+      <!-- Mashina 20 -->
+      <div class="car-card">
+        <img src="image/Traverse.jpg" alt="Chevrolet Traverse">
+        <h3>Chevrolet Traverse</h3>
+        <p class="price" data-price="2000000">2000000 so'm/kun</p>
+        <div class="btn" onclick="openModal('Chevrolet Traverse')">Buyurtma berish</div>
+      </div>
+
+  </section>
+ <!-- Modal -->
+  <div class="modal" id="orderModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2>Buyurtma</h2>
+      <p id="carName"></p>
+      <div class="form-group">
+        <label>Ism Sharifingiz:</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label>Telefon raqamingiz:</label>
+        <input type="tel" id="phone" placeholder="+998901234567" required>
+      </div>
+      <div class="form-group">
+        <label>Ijara boshlanish sanasi:</label>
+        <input type="date" id="start_date" required>
+      </div>
+      <div class="form-group">
+        <label>Ijara tugash sanasi:</label>
+        <input type="date" id="end_date" required>
+      </div>
+      <button onclick="submitOrder()">Tasdiqlash</button>
+    </div>
+  </div>
+
+<script>
+let selectedCar = "";
+let selectedPrice = "";
+
+// Telegram tayyorlash
+if (window.Telegram && window.Telegram.WebApp) {
+    Telegram.WebApp.ready();
+    console.log("✅ Telegram WebApp tayyor!");
+}
+
+// Tilni olish URLdan
+function getLangFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("lang") || localStorage.getItem("lang") || "uz";
+}
+
+// Tilni yuklash va HTML ga qo‘llash
+async function loadLanguage(lang) {
+    try {
+        const response = await fetch(`locales/${lang}.json`);
+        if (!response.ok) throw new Error("Language file not found");
+        const texts = await response.json();
+        applyTranslations(texts);
+        localStorage.setItem("lang", lang);
+        document.documentElement.lang = lang;
+    } catch (err) {
+        console.error("❌ Tilni yuklashda xatolik:", err);
+    }
+}
+
+// Matnlarni sahifaga qo‘llash
+function applyTranslations(texts) {
+    document.querySelector("nav a.active").textContent = texts.navbar.autopark;
+
+    document.querySelectorAll(".car-card").forEach(card => {
+        const priceElement = card.querySelector(".price");
+        if(priceElement) {
+            const priceText = priceElement.innerText.split(" ")[0];
+            priceElement.innerText = `${priceText} ${texts.cars.price_suffix}`;
+        }
+        const btn = card.querySelector(".btn");
+        if(btn) btn.innerText = texts.cars.order_button;
+    });
+
+    const labels = document.querySelectorAll(".form-group label");
+    if(labels.length >= 4){
+        labels[0].innerText = texts.modal.name_label;
+        labels[1].innerText = texts.modal.phone_label;
+        labels[2].innerText = texts.modal.start_date_label;
+        labels[3].innerText = texts.modal.end_date_label;
+    }
+
+    document.querySelector("#orderModal h2").innerText = texts.modal.title;
+    document.querySelector("#orderModal button").innerText = texts.modal.confirm_button;
+    window.ALERTS = texts.alerts;
+    console.log(texts.console.ready);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const lang = getLangFromUrl();
+    loadLanguage(lang);
+});
+
+// Modal va buyurtma funksiyalari
+function openModal(car) {
+    selectedCar = car;
+    let carElement = Array.from(document.querySelectorAll(".car-card"))
+        .find(c => c.querySelector("h3").innerText === car);
+    if(carElement) selectedPrice = carElement.querySelector(".price").innerText;
+    document.getElementById("carName").innerText = "Mashina: " + car;
+    document.getElementById("orderModal").style.display = "flex";
+}
+
+function submitOrder() {
+    let name = document.getElementById("name").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let dateFrom = document.getElementById("start_date").value;
+    let dateTo = document.getElementById("end_date").value;
+
+    if(!name || !phone || !dateFrom || !dateTo){
+        if(window.ALERTS && window.ALERTS.fill_fields) alert(window.ALERTS.fill_fields);
+        else alert("⚠️ Barcha maydonlarni to‘ldiring!");
+        return;
+    }
+
+    let order = { car:selectedCar, price:selectedPrice, name, phone, date_from:dateFrom, date_to:dateTo };
+
+    if(window.Telegram && window.Telegram.WebApp){
+        try{ Telegram.WebApp.sendData(JSON.stringify(order)); Telegram.WebApp.close(); }
+        catch(e){ if(window.ALERTS && window.ALERTS.send_error) alert(window.ALERTS.send_error); else alert("❌ sendData ishlamadi!"); console.error(e);}
+    } else { if(window.ALERTS && window.ALERTS.no_webapp) alert(window.ALERTS.no_webapp); else alert("❌ Telegram WebApp topilmadi!"); }
+
+    document.getElementById("orderModal").style.display = "none";
+}
+
+function closeModal(){
+    document.getElementById("orderModal").style.display = "none";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "navbar": {
+    "autopark": "Автопарк"
+  },
+  "cars": {
+    "price_suffix": "сум/день",
+    "order_button": "Сделать заказ"
+  },
+  "modal": {
+    "title": "Заказ",
+    "car_label": "Машина:",
+    "name_label": "Ваше имя и фамилия:",
+    "phone_label": "Ваш номер телефона:",
+    "start_date_label": "Дата начала аренды:",
+    "end_date_label": "Дата окончания аренды:",
+    "confirm_button": "Подтвердить"
+  },
+  "alerts": {
+    "fill_fields": "⚠️ Заполните все поля!",
+    "send_error": "❌ Не удалось отправить данные!",
+    "no_webapp": "❌ Telegram WebApp не найден!"
+  },
+  "console": {
+    "ready": "✅ Telegram WebApp готов!"
+  }
+}

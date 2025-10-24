@@ -1,0 +1,26 @@
+{
+  "navbar": {
+    "autopark": "Avtopark"
+  },
+  "cars": {
+    "price_suffix": "so'm/kun",
+    "order_button": "Buyurtma berish"
+  },
+  "modal": {
+    "title": "Buyurtma",
+    "car_label": "Mashina:",
+    "name_label": "Ism Sharifingiz:",
+    "phone_label": "Telefon raqamingiz:",
+    "start_date_label": "Ijara boshlanish sanasi:",
+    "end_date_label": "Ijara tugash sanasi:",
+    "confirm_button": "Tasdiqlash"
+  },
+  "alerts": {
+    "fill_fields": "⚠️ Barcha maydonlarni to‘ldiring!",
+    "send_error": "❌ sendData ishlamadi!",
+    "no_webapp": "❌ Telegram WebApp topilmadi!"
+  },
+  "console": {
+    "ready": "✅ Telegram WebApp tayyor!"
+  }
+}
