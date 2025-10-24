@@ -8,7 +8,7 @@ async-timeout==4.0.3
 asyncpg==0.30.0
 
 # ORM va DB
-SQLAlchemy>=2.1.0,<3.0
+SQLAlchemy==2.0.44
 psycopg2-binary==2.9.11
 greenlet==3.2.4
 
