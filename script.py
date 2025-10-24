@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 from datetime import datetime
 from aiogram.client.default import DefaultBotProperties
 from aiogram import Bot, Dispatcher, F, types
@@ -14,10 +15,18 @@ from aiogram.types import (
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.memory import MemoryStorage
+from flask import Flask
 
 from bot.config.env import BOT_TOKEN, WEBAPP_URL, CHANNEL_ID
 from bot.database.db import init_db, save_order
 from bot.locale.get_lang import get_localized_text
+
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return "🤖 Bot ishlamoqda!"
 
 bot = Bot(BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
 storage = MemoryStorage()
@@ -186,12 +195,17 @@ async def cancel_order(callback: CallbackQuery, state: FSMContext):
 
 
 # 7️⃣ Run
-async def main():
+async def start_bot():
     await init_db()
     await bot.delete_webhook(drop_pending_updates=True)
     print("🤖 Bot ishga tushdi...")
     await dp.start_polling(bot)
 
-
+# -----------------------------
+# Flask + asyncio bot
+# -----------------------------
 if __name__ == "__main__":
-    asyncio.run(main())
+    port = int(os.environ.get("PORT", 5000))
+    loop = asyncio.get_event_loop()
+    loop.create_task(start_bot())
+    app.run(host="0.0.0.0", port=port)
