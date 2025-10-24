@@ -2,7 +2,9 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-DATABASE_URL = "postgresql+asyncpg://postgres:0200@localhost:5432/rental_bot"
+# DATABASE_URL = "postgresql+asyncpg://postgres:0200@localhost:5432/rental_bot"
+
+DATABASE_URL = "postgresql+asyncpg://telegram_db_kvhc_user:YGIljzGsXOjWdYXagqKMLXvHPHqguzyU@dpg-d3tl6nk9c44c73e58n1g-a.oregon-postgres.render.com/telegram_db_kvhc"
 
 engine = create_async_engine(DATABASE_URL, echo=False)
 Base = declarative_base()
